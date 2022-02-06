@@ -20,7 +20,6 @@ class Card:
         else:
             return f"cards/{self.number}_{self.pattern}_{self.color}_{self.shape}.png"
 
-
     
 class Deck:
     def __init__(self):

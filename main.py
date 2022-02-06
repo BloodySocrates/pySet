@@ -4,9 +4,7 @@ import random
 from set_deck import Card, Deck
 from game_board import Board
 
-
 pygame.init()
-mainClock = pygame.time.Clock()
 
 CARDHEIGHT=100
 CARDWIDTH=200
@@ -17,15 +15,11 @@ COLUMNS=4
 deck = Deck()
 deck.shuffle()
 
-hand = [deck.deal_card() for i in range(0,16)]
-
-# create 2d array of card upper left corner coordinates
+# create board object from config globals above
 board=Board(CARDWIDTH, CARDHEIGHT, GUTTER, ROWS, COLUMNS)
-
-WINDOWWIDTH=((CARDWIDTH+GUTTER)*4 + GUTTER)
-WINDOWHEIGHT=((CARDHEIGHT+GUTTER)*4 + GUTTER)
-
 windowSurface = pygame.display.set_mode((board.total_width, board.total_height), 0, 32)
+
+# set pygame window caption
 pygame.display.set_caption('SET')
 
 def make_card_image(card_obj):
@@ -36,15 +30,10 @@ def make_card_image(card_obj):
     cardImageStretched = pygame.transform.scale(cardImage, (CARDWIDTH, CARDHEIGHT))
     return cardImageStretched
 
-for row in board.board:
-    for point in row:
-        windowSurface.blit(make_card_image(hand.pop()), pygame.Rect(point[0],point[1], CARDWIDTH, CARDHEIGHT))
-
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
+# take the card coordinates array from board object and
+# render a card to each until you're out of points
+for point in board.board:
+    windowSurface.blit(make_card_image(deck.deal_card()), pygame.Rect(point[0],point[1], CARDWIDTH, CARDHEIGHT))
 
 def end_game():
     basicFont = pygame.font.SysFont(None, 48)
@@ -62,9 +51,10 @@ while game_over == False:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-
+        
+        # prints coordinate clicked to console
         if event.type == MOUSEBUTTONUP:
-            pass
+            print(event.pos)
         
         if event.type == KEYUP:
             if event.key == K_ESCAPE:
@@ -74,5 +64,4 @@ while game_over == False:
    # windowSurface.fill(WHITE)
    
    # pygame.display.update()
-   # mainClock.tick(40)
 

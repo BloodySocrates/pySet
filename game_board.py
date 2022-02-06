@@ -23,11 +23,9 @@ class Board:
         array=[]
         y_values=[self.gutter+(self.cardheight+self.gutter)*i for i in range(0,self.columns)]
         for y in y_values:
-            row=[]
             for i in range(0,self.rows):
                 cardx=self.gutter+(self.cardwidth+self.gutter)*i
                 cardy=y
-                row.append((cardx, cardy)) 
-            array.append(row)
+                array.append((cardx, cardy)) 
         return array
 
