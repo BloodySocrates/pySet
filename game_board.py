@@ -1,16 +1,23 @@
 class Board:
     def __init__(self, cardwidth, cardheight, gutter, rows, columns):
+        '''
+        todo: add total width and height properties, 
+        so this class can serve as config for pygame.display.set_mode
+        '''
         self.cardwidth = cardwidth
         self.cardheight = cardheight
         self.gutter = gutter
         self.rows = rows
         self.columns = columns
         self.board = self.make_board()
+        self.total_width = ((self.cardwidth+self.gutter)*self.columns)+self.gutter
+        self.total_height = ((self.cardheight+self.gutter)*self.rows)+self.gutter
+
 
     def make_board(self):
         '''
         takes a gutter size, card height, card width
-        and number of columns, and number of rows
+        number of columns, and number of rows
         returns 2d array of points for cards
         '''
         array=[]
@@ -23,7 +30,4 @@ class Board:
                 row.append((cardx, cardy)) 
             array.append(row)
         return array
-
-board=Board(200, 100, 20, 4, 4)
-print(board.board)
 
