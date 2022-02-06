@@ -2,37 +2,22 @@ import pygame, sys, time
 from pygame.locals import *
 import random
 from set_deck import Card, Deck
+from game_board import Board
+
 
 pygame.init()
 mainClock = pygame.time.Clock()
 
-deck = Deck()
-
 CARDHEIGHT=100
 CARDWIDTH=200
 GUTTER=CARDWIDTH/10
+ROWS=4
+COLUMNS=4
 
-def make_row(y_value):
-    row=[]
-    for i in range(0,4):
-        cardx=GUTTER+(CARDWIDTH+GUTTER)*i
-        cardy=y_value
-        row.append((cardx, cardy))
-    return row
+deck = Deck()
+board=Board(CARDWIDTH, CARDHEIGHT, GUTTER, ROWS, COLUMNS)
 
-row1=make_row(20)
-print(row1)
-
-def make_coords_array(y_values):
-    coords_array=[]
-    for y in y_values:
-        row = make_row(y)
-        coords_array.append(row)
-    return coords_array
-
-y_values=[GUTTER+(CARDHEIGHT+GUTTER)*i for i in range(0,4)]
-
-coords_array = make_coords_array(y_values)
+coords_array = board.board
 print(coords_array)
 
 WINDOWWIDTH=((CARDWIDTH+GUTTER)*4 + GUTTER)
