@@ -7,14 +7,44 @@ class Card:
         self.pattern = pattern
         self.color = color
         self.shape = shape
-        self.image_uri = self.get_image_uri() 
+        self.selected = False
+        self.image_uri = self.get_image_uri()
+        self.grayscale_uri = self.get_grayscale()
+                  
         self.set_game = set_game
+        # initialize the card and set its starting position
+        self.screen = set_game.screen
+        self.screen_rect = set_game.screen.get_rect()
+        # loads an image  
+        self.image_stretched = self.load_image() 
+        self.rect = self.image_stretched.get_rect()
+
+ 
+    def load_image(self):
+        # get image uri based on concatenated name prop
+        if self.selected == True:
+            image = pygame.image.load(self.grayscale_uri)
+        else:
+            image = pygame.image.load(self.image_uri)
+        image_stretched = pygame.transform.scale(image, (self.set_game.board.cardwidth, self.set_game.board.cardheight))
+        return image_stretched
+
+    def select(self):
+        self.selected = not(self.selected)
+
+    def blit_me(self, coords):
+        self.rect.x=coords[0]
+        self.rect.y=coords[1]
+        self.screen.blit(self.image_stretched, self.rect)
 
     def __str__(self):
         if self.number == "two" or self.number == "three":
             return f"{self.number} {self.pattern} {self.color} {self.shape}s"
         else:
             return f"{self.number} {self.pattern} {self.color} {self.shape}"
+    
+    def get_grayscale(self):
+        return 'grayscale/'+self.image_uri.split('/')[1]
 
     def get_image_uri(self):
         if self.number == "two" or self.number == "three":
