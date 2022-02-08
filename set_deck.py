@@ -31,8 +31,10 @@ class Card:
 
     def select(self):
         self.selected = not(self.selected)
+        self.image_stretched = self.load_image()
 
     def blit_me(self, coords):
+        self.coords = coords
         self.rect.x=coords[0]
         self.rect.y=coords[1]
         self.screen.blit(self.image_stretched, self.rect)
@@ -44,7 +46,10 @@ class Card:
             return f"{self.number} {self.pattern} {self.color} {self.shape}"
     
     def get_grayscale(self):
-        return 'grayscale/'+self.image_uri.split('/')[1]
+        if self.number == "two" or self.number == "three":
+            return f"grayscale/{self.number}_{self.pattern}_{self.color}_{self.shape}s.png"
+        else:
+            return f"grayscale/{self.number}_{self.pattern}_{self.color}_{self.shape}.png"
 
     def get_image_uri(self):
         if self.number == "two" or self.number == "three":

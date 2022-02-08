@@ -33,9 +33,7 @@ class Set():
                     # the player clicked 
                     for card in self.hand:
                         if card.rect.collidepoint(event.pos):
-                            card.select() == True
-                            print(card.image_uri, card.selected)
-                            card.load_image()
+                            card.select() 
 
                 if event.type == KEYUP:
                     if event.key == K_ESCAPE:
