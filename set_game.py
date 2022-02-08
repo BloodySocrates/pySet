@@ -17,7 +17,22 @@ class Set():
         self.deck = Deck(self)
         self.deck.shuffle()
         self.hand = [self.deck.deal_card() for i in range(0, 16)] 
-        print(self.hand)
+        self.selected_cards = []
+    
+    def is_set(self):
+        # put each cards attributes in respective sets. if each sets length is either 3 or 1, it is a set  
+        number = set([c.number for c in self.selected_cards])
+        pattern = set([c.pattern for c in self.selected_cards])
+        color = set([c.color for c in self.selected_cards])
+        shape = set([c.shape for c in self.selected_cards])
+        sets = []
+        sets.extend([len(number), len(pattern),len(color),len(shape)])
+        print(sets)
+        if 2 not in sets:
+            return True
+        else:
+            return False
+
 
     def run_game(self):
         while True:
@@ -30,10 +45,24 @@ class Set():
                 if event.type == MOUSEBUTTONUP:
                     print(event.pos)
                     # for each card that has been dealt, check if 
-                    # the player clicked 
+                    # the player clicked it
                     for card in self.hand:
                         if card.rect.collidepoint(event.pos):
                             card.select() 
+                            self.selected_cards.append(card)
+                            if len(self.selected_cards) == 3:
+                                print(self.is_set())
+                                if self.is_set():
+                                    self.hand = list(filter(lambda x : x.selected == False, self.hand))
+                                    for i in range(0,3):
+                                        self.hand.append(self.deck.deal_card())
+                                    self.selected_cards = []
+                                else:
+                                    for card in self.selected_cards:
+                                        card.select()
+                                    self.selected_cards = []
+
+
 
                 if event.type == KEYUP:
                     if event.key == K_ESCAPE:
