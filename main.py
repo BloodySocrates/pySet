@@ -25,7 +25,9 @@ pygame.display.set_caption('SET')
 def make_card_image(card_obj):
 #the first set of values here should be x and y position to render the card at
     #creates a rect object with appropriate
-    card = pygame.Rect(GUTTER, GUTTER, CARDWIDTH, CARDHEIGHT)
+    # the solution here is to abstract this function into set_board class
+    # make set_board class from board function. figure out inheritance
+    card = pygame.Rect(0, 0, CARDWIDTH, CARDHEIGHT)
     cardImage = pygame.image.load(card_obj.image_uri)
     cardImageStretched = pygame.transform.scale(cardImage, (CARDWIDTH, CARDHEIGHT))
     return cardImageStretched

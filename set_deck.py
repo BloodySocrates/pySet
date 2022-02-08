@@ -1,12 +1,14 @@
 import random
+import pygame
 
 class Card:
-    def __init__(self, number, pattern, color, shape):
+    def __init__(self, number, pattern, color, shape, set_game):
         self.number = number
         self.pattern = pattern
         self.color = color
         self.shape = shape
         self.image_uri = self.get_image_uri() 
+        self.set_game = set_game
 
     def __str__(self):
         if self.number == "two" or self.number == "three":
@@ -22,7 +24,8 @@ class Card:
 
     
 class Deck:
-    def __init__(self):
+    def __init__(self, set_game):
+        self.set_game = set_game
         self.cards=[]
         self.build()
 
@@ -31,7 +34,7 @@ class Deck:
             for pattern in ["empty","striped","solid"]:
                 for color in ["red","green","purple"]:
                     for shape in ["diamond","pill","squiggle"]:
-                        card = Card(number, pattern, color, shape)
+                        card = Card(number, pattern, color, shape, self.set_game)
                         self.cards.append(card)
 
     def shuffle(self):
